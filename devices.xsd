@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="devices">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="device" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="serialNr" type="serialNrPattern" use="required"/>
+					<xs:attribute name="productKey" type="productKeyPattern" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:unique name="UniqueSerialNr">
+		<xs:selector xpath="device"/> 
+		<xs:field xpath="@serialNr"/> 
+	</xs:unique>
+	<xs:unique name="UniqueProductKey">
+		<xs:selector xpath="device"/>
+		<xs:field xpath="@productKey"/>
+	</xs:unique>
+</xs:element>
+
+<xs:simpleType name="serialNrPattern">
+   <xs:restriction base="xs:string">
+      <xs:pattern value="\S+"/>
+   </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="productKeyPattern">
+   <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}"/>
+   </xs:restriction>
+</xs:simpleType>
+
+</xs:schema>
